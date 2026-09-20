@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<!--
+  ===========================================================================
+  COMO EDITAR ESTE SITE
+  ===========================================================================
+  Procure pelas marcações "EDITE AQUI" espalhadas pelo arquivo (Ctrl+F ajuda).
+  Você só precisa mexer no HTML (a parte com as tags <...>), não precisa
+  tocar no CSS (dentro de <style>) nem no JS (dentro de <script>) a menos
+  que queira mudar cores ou comportamento.
+
+  Principais pontos para editar:
+   1. Seu nome, cargo/área e foto (logo no topo do <body>)
+   2. Aba "Sobre mim" — está em branco de propósito, escreva sua história
+   3. Aba "Experiência" — cargos, formação e habilidades
+   4. Aba "Certificados" — troque as imagens e textos de cada certificado
+   5. Aba "Contatos" — celular, e-mail, LinkedIn
+   6. Aba "Fale comigo" — links de e-mail, WhatsApp e LinkedIn (no final)
+
+  Para trocar uma imagem: troque o link dentro de src="..." por
+  o link da sua imagem, ou pelo caminho de um arquivo local, ex:
+  src="minha-foto.jpg" (a imagem precisa estar na mesma pasta do site).
+  ===========================================================================
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gustavo — Autobiografia Profissional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F3EC;
+    --paper-dim:#EDE8DC;
+    --ink:#20262B;
+    --ink-soft:#4B4A44;
+    --muted:#8A8375;
+    --pine:#2F5D50;
+    --pine-dark:#213F37;
+    --brass:#A67C3D;
+    --line:#DBD4C3;
+    --card:#FFFDF8;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    margin:0;
+    color:var(--ink);
+  }
+
+  a{color:inherit;}
+
+  .layout{
+    display:grid;
+    grid-template-columns:300px 1fr;
+    min-height:100vh;
+    max-width:1180px;
+    margin:0 auto;
+  }
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    padding:56px 36px;
+    border-right:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    gap:40px;
+    position:sticky;
+    top:0;
+    align-self:start;
+    height:100vh;
+  }
+
+  .id-block{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+
+  .photo{
+    width:104px;
+    height:104px;
+    border-radius:4px;
+    object-fit:cover;
+    background:var(--paper-dim);
+    border:1px solid var(--line);
+  }
+
+  .id-name{
+    font-size:1.5rem;
+    letter-spacing:-0.01em;
+  }
+
+  .id-role{
+    font-size:0.92rem;
+    color:var(--pine);
+    font-weight:500;
+  }
+
+  .id-tagline{
+    font-size:0.85rem;
+    color:var(--muted);
+    max-width:22ch;
+  }
+
+  nav.tabs{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+
+  nav.tabs button{
+    all:unset;
+    cursor:pointer;
+    padding:11px 4px;
+    font-size:0.95rem;
+    color:var(--ink-soft);
+    border-left:2px solid transparent;
+    padding-left:14px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+
+  nav.tabs button:hover{
+    color:var(--ink);
+  }
+
+  nav.tabs button.active{
+    color:var(--pine-dark);
+    font-weight:600;
+    border-left:2px solid var(--pine);
+  }
+
+  .sidebar-footer{
+    margin-top:auto;
+    font-size:0.75rem;
+    color:var(--muted);
+  }
+
+  /* ---------- MAIN CONTENT ---------- */
+  main{
+    padding:64px 56px;
+    max-width:760px;
+  }
+
+  .panel{
+    display:none;
+    animation:fade .35s ease;
+  }
+
+  .panel.active{
+    display:block;
+  }
+
+  @keyframes fade{
+    from{opacity:0; transform:translateY(6px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .eyebrow{
+    font-size:0.78rem;
+    color:var(--brass);
+    margin-bottom:10px;
+  }
+
+  .panel h2{
+    font-size:2rem;
+    margin-bottom:22px;
+  }
+
+  .placeholder-text{
+    color:var(--muted);
+    font-style:italic;
+    border:1px dashed var(--line);
+    background:var(--card);
+    padding:20px 22px;
+    border-radius:2px;
+    font-size:0.95rem;
+    line-height:1.7;
+  }
+
+  .rule{
+    height:1px;
+    background:var(--line);
+    margin:36px 0;
+    border:none;
+  }
+
+  /* Experiência */
+  .exp-item{
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:18px;
+    padding:18px 0;
+    border-top:1px solid var(--line);
+  }
+  .exp-item:first-of-type{border-top:none;}
+  .exp-period{
+    color:var(--muted);
+    font-size:0.85rem;
+    padding-top:3px;
+  }
+  .exp-role{
+    font-weight:600;
+    font-size:1rem;
+  }
+  .exp-org{
+    color:var(--pine);
+    font-size:0.9rem;
+    margin-bottom:6px;
+  }
+  .exp-desc{
+    color:var(--ink-soft);
+    font-size:0.92rem;
+  }
+
+  .skills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:8px;
+  }
+  .skill-tag{
+    font-size:0.82rem;
+    padding:6px 12px;
+    background:var(--paper-dim);
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    border-radius:2px;
+  }
+
+  /* Certificados */
+  .cert-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+  }
+  .cert-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    overflow:hidden;
+  }
+  .cert-card img{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+    display:block;
+    background:var(--paper-dim);
+    border-bottom:1px solid var(--line);
+  }
+  .cert-body{
+    padding:16px 18px;
+  }
+  .cert-title{
+    font-weight:600;
+    font-size:0.95rem;
+    margin-bottom:4px;
+  }
+  .cert-issuer{
+    font-size:0.82rem;
+    color:var(--pine);
+  }
+  .cert-date{
+    font-size:0.78rem;
+    color:var(--muted);
+    margin-top:4px;
+  }
+
+  /* Contatos */
+  .contact-list{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .contact-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+  }
+  .contact-row:first-child{border-top:none;}
+  .contact-label{
+    font-size:0.82rem;
+    color:var(--muted);
+  }
+  .contact-value{
+    font-size:0.98rem;
+    font-weight:500;
+  }
+  .contact-value a{text-decoration:none;}
+  .contact-value a:hover{text-decoration:underline;}
+
+  /* Fale comigo */
+  .reach-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:14px;
+    max-width:420px;
+  }
+  .reach-btn{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 22px;
+    background:var(--card);
+    border:1px solid var(--line);
+    text-decoration:none;
+    color:var(--ink);
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .reach-btn:hover{
+    border-color:var(--pine);
+    transform:translateX(3px);
+  }
+  .reach-label{
+    font-weight:600;
+    font-size:0.98rem;
+  }
+  .reach-sub{
+    font-size:0.8rem;
+    color:var(--muted);
+    margin-top:2px;
+  }
+  .reach-arrow{
+    color:var(--pine);
+    font-size:1.1rem;
+  }
+
+  .closing-note{
+    margin-top:40px;
+    font-size:0.85rem;
+    color:var(--muted);
+    max-width:50ch;
+  }
+
+  /* ---------- MOBILE ---------- */
+  @media (max-width: 820px){
+    .layout{
+      grid-template-columns:1fr;
+    }
+    .sidebar{
+      position:relative;
+      height:auto;
+      border-right:none;
+      border-bottom:1px solid var(--line);
+      padding:36px 24px;
+      gap:24px;
+    }
+    nav.tabs{
+      flex-direction:row;
+      flex-wrap:wrap;
+      gap:6px;
+    }
+    nav.tabs button{
+      border-left:none;
+      border-bottom:2px solid transparent;
+      padding:8px 10px;
+    }
+    nav.tabs button.active{
+      border-left:none;
+      border-bottom:2px solid var(--pine);
+    }
+    main{
+      padding:40px 24px;
+    }
+    .exp-item{
+      grid-template-columns:1fr;
+      gap:4px;
+    }
+    .cert-grid{
+      grid-template-columns:1fr;
+    }
+  }
+
+  :focus-visible{
+    outline:2px solid var(--pine);
+    outline-offset:2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ======================= SIDEBAR ======================= -->
+  <aside class="sidebar">
+    <div class="id-block">
+      <img class="photo" src="image.png" alt="Foto de perfil">
+
+      <div>
+        <div class="id-name">Gustavo Camacho Almeida Santos</div>
+        <div class="id-role">Administração</div>
+      </div>
+
+      <div class="id-tagline">“Eu não preciso ter certeza de onde vou chegar; preciso continuar andando enquanto descubro quem estou me tornando.”</div>
+    </div>
+
+    <nav class="tabs">
+      <button class="active" data-tab="sobre">Sobre mim</button>
+      <button data-tab="experiencia">Experiência &amp; habilidades</button>
+      <button data-tab="certificados">Certificados</button>
+      <button data-tab="contatos">Contatos</button>
+      <button data-tab="contato">Fale comigo</button>
+    </nav>
+
+    <div class="sidebar-footer">
+      Atualizado em 2026
+    </div>
+  </aside>
+
+  <!-- ======================= CONTEÚDO ======================= -->
+  <main>
+
+    <!-- ---------- SOBRE MIM (em branco, para você escrever) ---------- -->
+    <section class="panel active" id="sobre">
+      <div class="eyebrow">Quem eu sou</div>
+      <h2>Sou estudante e estou construindo minha trajetória profissional com uma mentalidade de aprendizado contínuo. Tenho interesse por diferentes áreas, principalmente aquelas que envolvem tecnologia, administração, esportes e desenvolvimento pessoal, e procuro transformar cada experiência em uma oportunidade de adquirir novas habilidades.
+
+Tenho formação em Mecânica Automotiva Básica e Formação para o Mundo do Trabalho pela ESPRO, além de experiência prática em uma simulação empresarial como auxiliar administrativo. Essas experiências contribuíram para desenvolver minha comunicação, organização, responsabilidade com horários, trabalho em equipe e capacidade de seguir processos e aprender novas tarefas.
+
+Fora do ambiente acadêmico e profissional, também busco constantemente me desenvolver. Tenho interesse em programação, esportes e filosofia, e vejo disciplina e consistência como ferramentas importantes para evoluir em qualquer área.
+
+Estou em busca da minha primeira oportunidade profissional, não apenas para ingressar no mercado de trabalho, mas para aprender na prática, assumir responsabilidades e construir uma carreira baseada em evolução constante.</h2>
+
+      <p class="placeholder-text">
+De onde eu vim <br/> <br/>
+
+Venho da periferia e de uma família de classe baixa/média. Cresci entendendo desde cedo que as oportunidades precisam ser construídas e que o caminho profissional não vem pronto. Minha origem faz parte de quem eu sou e influenciou diretamente a forma como enxergo trabalho, responsabilidade e futuro. <br/> <br/>
+
+O que me move <br/> <br/>
+
+O que me move é a vontade de evoluir. Tenho curiosidade por diferentes áreas e gosto de aprender, testar meus limites e transformar aquilo que aprendo em algo prático. Não quero ficar parado no mesmo lugar: busco constantemente desenvolver novas habilidades, descobrir meus interesses e me tornar uma pessoa e um profissional cada vez mais preparado.
+
+Também valorizo a independência e a construção do meu próprio caminho. Para mim, crescer profissionalmente não significa apenas conquistar um cargo ou ganhar dinheiro, mas adquirir conhecimento, experiência e confiança para assumir responsabilidades cada vez maiores. <br/> <br/>
+
+Minha formação <br/> <br/>
+
+Atualmente, estou cursando o Ensino Médio e o Curso Cívico-Militar. Também tenho formação em Mecânica Automotiva Básica, Inglês Básico e Formação para o Mundo do Trabalho (FMT) pela ESPRO. Essas experiências me permitiram conhecer diferentes áreas e desenvolver competências relacionadas à comunicação, organização, responsabilidade, trabalho em equipe e adaptação a diferentes situações. <br/> <br/>
+
+Meus valores <br/> <br/>
+
+Acredito que confiança é algo que se conquista através das atitudes. Valorizo responsabilidade, respeito, disciplina, honestidade e disposição para aprender. Procuro cumprir aquilo que assumo, tratar as pessoas com respeito e reconhecer quando ainda preciso aprender alguma coisa. <br/> <br/>
+
+Também acredito que fazer o melhor possível não significa ser perfeito, mas entregar aquilo que está ao meu alcance com seriedade, atenção e vontade de melhorar. <br/> <br/>
+
+O que busco profissionalmente <br/> <br/>
+
+Busco construir uma carreira como um profissional confiável, respeitado e comprometido com aquilo que faz. Quero ser alguém em quem uma equipe possa confiar, tanto pela postura quanto pela qualidade do trabalho.
+
+Estou em busca de oportunidades que me permitam aprender na prática, adquirir experiência e assumir novas responsabilidades. Meu objetivo é, dentro das condições e recursos disponíveis, sempre entregar o melhor serviço que eu puder e continuar evoluindo ao longo do caminho.
+      </p>
+    </section>
+
+    <!-- ---------- EXPERIÊNCIA & HABILIDADES ---------- -->
+    <section class="panel" id="experiencia">
+      <div class="eyebrow">Trajetória</div>
+      <h2>Experiência &amp; habilidades</h2>
+
+      <div class="exp-item">
+        <div class="exp-period">2026 — 2026</div>
+        <div>
+          <div class="exp-role">Aux. Administrativo</div>
+          <div class="exp-org">Prisma - ESPRO</div>
+          <div class="exp-desc">Atuei no apoio à organização geral da empresa, auxiliando na elaboração de cronogramas, organização de apresentações, acompanhamento e cobrança de demandas entre setores, organização do ambiente e outras atividades administrativas voltadas ao bom funcionamento da empresa.</div>
+        </div>
+      </div>
+
+      <hr class="rule">
+
+      <h3 style="font-size:1.1rem; margin-bottom:6px;">Habilidades</h3>
+
+      <div class="skills">
+        <span class="skill-tag">Boa comunicação</span>
+        <span class="skill-tag">Organização básica</span>
+        <span class="skill-tag">Responsabilidade com horários</span>
+        <span class="skill-tag">Trabalho em equipe</span>
+        <span class="skill-tag">Proatividade</span>
+        <span class="skill-tag">Comprometimento</span>
+        <span class="skill-tag">Adaptabilidade</span>
+      </div>
+    </section>
+
+    <!-- ---------- CERTIFICADOS ---------- -->
+    <section class="panel" id="certificados">
+      <div class="eyebrow">Qualificações</div>
+      <h2>Certificados</h2>
+
+      <div class="cert-grid">
+
+        <div class="cert-card">
+          <img src="Scan20092026162046__001.jpg" alt="Certificado 1">
+          <div class="cert-body">
+            <div class="cert-title">FMT (Formação para o Mundo do Trabalho)</div>
+            <div class="cert-issuer">Espro</div>
+            <div class="cert-date">Setembro / 2026</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <img src="image2.png" alt="Certificado 2">
+          <div class="cert-body">
+            <div class="cert-title">Noção básica de Mecânica Automotiva</div>
+            <div class="cert-issuer">Senai</div>
+            <div class="cert-date">Setembro / 2025</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <img src="certificate-school-english-4-2026-09-12.png" alt="Certificado 1">
+          <div class="cert-body">
+            <div class="cert-title">Inglês Básico</div>
+            <div class="cert-issuer">Efekta</div>
+            <div class="cert-date">Setembro / 2026</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ---------- CONTATOS ---------- -->
+    <section class="panel" id="contatos">
+      <div class="eyebrow">Onde me encontrar</div>
+      <h2>Contatos</h2>
+
+      <div class="contact-list">
+        <div class="contact-row">
+          <span class="contact-label">Celular</span>
+          <span class="contact-value">(11) 9 7386-6437</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">E-mail</span>
+          <span class="contact-value"><a href="mailto:gugaocasantos1@gmail.com">gugaocasantos1@gmail.com</a></span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">LinkedIn</span>
+          <span class="contact-value"><a href="https://linkedin.com/in/gustavocamachoalmeidasantos" target="_blank" rel="noopener">www.linkedin.com/in/gustavocamachoalmeidasantos</a></span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">Localização</span>
+          <span class="contact-value">Osasco, São Paulo</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- FALE COMIGO ---------- -->
+    <section class="panel" id="contato">
+      <div class="eyebrow">Vamos conversar</div>
+      <h2>Fale comigo</h2>
+
+      <div class="reach-grid">
+
+        <a class="reach-btn" href="mailto:gugaocasantos1@gmail.com" target="_blank" rel="noopener">
+          <div>
+            <div class="reach-label">E-mail</div>
+            <div class="reach-sub">gugaocasantos1@gmail.com</div>
+          </div>
+          <span class="reach-arrow">↗</span>
+        </a>
+
+        <a class="reach-btn" href="https://wa.me/5511973866437" target="_blank" rel="noopener">
+          <div>
+            <div class="reach-label">WhatsApp</div>
+            <div class="reach-sub">Enviar uma mensagem</div>
+          </div>
+          <span class="reach-arrow">↗</span>
+        </a>
+
+        <a class="reach-btn" href="https://linkedin.com/in/gustavocamachoalmeidasantos" target="_blank" rel="noopener">
+          <div>
+            <div class="reach-label">LinkedIn</div>
+            <div class="reach-sub">Ver meu perfil</div>
+          </div>
+          <span class="reach-arrow">↗</span>
+        </a>
+
+      </div>
+
+      <p class="closing-note">
+        Fico à disposição para novas oportunidades, parcerias ou apenas
+        para trocar uma ideia. Escolha o canal que preferir acima.
+      </p>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // Alterna as abas:
+  const buttons = document.querySelectorAll('nav.tabs button');
+  const panels = document.querySelectorAll('.panel');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-tab');
+
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      panels.forEach(p => p.classList.remove('active'));
+      document.getElementById(target).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
